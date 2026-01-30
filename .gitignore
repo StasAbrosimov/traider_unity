@@ -8,12 +8,12 @@
 
 # Unity3d folders
 
-/*.csproj
-/*.sln
-/Library
-/Temp
-/Builds
-/[Uu]ser[Ss]ettings
+Traider/*.csproj
+Traider/*.sln
+Traider/Library
+Traider/Temp
+Traider/Builds
+Traider/[Uu]ser[Ss]ettings
 
 # Build results
 
@@ -163,6 +163,7 @@ $RECYCLE.BIN/
 # Editor directories and files
 .idea
 .vs
+.vsconfig
 .vscode
 *.suo
 *.ntvs*
