@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d294fe4d95cab8b46828a7068da6a39d, type: 3}
+  m_Name: FarmersShop
+  m_EditorClassIdentifier: 
+  ShopId: Farmers_1
+  Name: Farmers
+  Description: 
+  Image: {fileID: 4518305585588587519, guid: e0211ad4505477847a8f868803e51b1c, type: 3}
+  SellItemModification: 1.2
+  ByItemModification: 1.2
+  ItemsToSell:
+  - shopLevelItems:
+    - shopItem: {fileID: 11400000, guid: bfc077f2ca9dd3840b5c2e1e4cb837a7, type: 2}
+      OverridePrice: 0
+      OverrideModification: 0
+      Quantity: 0
+      InfiniteQuantity: 1
+    - shopItem: {fileID: 11400000, guid: 986b42361b059f6488a7f11c058cae74, type: 2}
+      OverridePrice: 0
+      OverrideModification: 0
+      Quantity: 0
+      InfiniteQuantity: 1
+    ShopLevelThreshold: 0
+  - shopLevelItems: []
+    ShopLevelThreshold: 50000
+  ItemsToBy:
+  - shopLevelItems:
+    - shopItem: {fileID: 11400000, guid: fa1f794056b11e140bcfd73153b0f98c, type: 2}
+      OverridePrice: 0
+      OverrideModification: 0
+      Quantity: 2
+      InfiniteQuantity: 1
+    - shopItem: {fileID: 11400000, guid: 9eee43476846567428a7eefcfeb55e03, type: 2}
+      OverridePrice: 0
+      OverrideModification: 0
+      Quantity: 5
+      InfiniteQuantity: 1
+    - shopItem: {fileID: 11400000, guid: 06670bd6a62b04748946ab2906edc22e, type: 2}
+      OverridePrice: 0
+      OverrideModification: 0
+      Quantity: 5
+      InfiniteQuantity: 1
+    - shopItem: {fileID: 11400000, guid: 2df37b653fb4da04a92ec222a757f159, type: 2}
+      OverridePrice: 0
+      OverrideModification: 1.5
+      Quantity: 0
+      InfiniteQuantity: 1
+    - shopItem: {fileID: 11400000, guid: 1fa74faae99a7114f886d0fa82e8bf24, type: 2}
+      OverridePrice: 0
+      OverrideModification: 1.5
+      Quantity: 5
+      InfiniteQuantity: 1
+    ShopLevelThreshold: 0

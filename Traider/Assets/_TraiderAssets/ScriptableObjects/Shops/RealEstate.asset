@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d294fe4d95cab8b46828a7068da6a39d, type: 3}
+  m_Name: RealEstate
+  m_EditorClassIdentifier: 
+  ShopId: realEstate
+  Name: Real estate
+  Description: 
+  Image: {fileID: -2627836694920136752, guid: a8b7b0f00d12384408ad0725a2e95ef0, type: 3}
+  SellItemModification: 2
+  ByItemModification: 1.1
+  ItemsToSell:
+  - shopLevelItems:
+    - shopItem: {fileID: 11400000, guid: e57130b5fb4ba4b4e9b092b6837bc5e9, type: 2}
+      OverridePrice: 0
+      OverrideModification: 0
+      Quantity: 1
+      InfiniteQuantity: 0
+    ShopLevelThreshold: 0
+  ItemsToBy:
+  - shopLevelItems:
+    - shopItem: {fileID: 11400000, guid: 1fa74faae99a7114f886d0fa82e8bf24, type: 2}
+      OverridePrice: 1
+      OverrideModification: 2
+      Quantity: 0
+      InfiniteQuantity: 1
+    ShopLevelThreshold: 0

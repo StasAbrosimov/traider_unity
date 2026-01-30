@@ -139,20 +139,30 @@ public class ItemDetailsView : MonoBehaviour
             _lessBtn.interactable = false;
             newCount = 0;
         }
-        else if (newCount >= Model.Quantity && !Model.InfiniteQuantity)
+        else if(newCount >= Model.Quantity && !Model.InfiniteQuantity)
         {
             newCount = Model.Quantity;
             _moreBtn.interactable = false;
             _currentCount = Model.Quantity;
         }
-        else
+
+        _currentCount = newCount;
+
+        _totalprice = _currentCount * Model.BasePrice;
+        _itemTotalPrice.text = _totalprice.ToString();
+
+        bool needUpdateCountText = true;
+        if(int.TryParse(_itemCount.text, out int parsedCount))
         {
-            _currentCount = newCount;
+            needUpdateCountText = parsedCount != _currentCount;
         }
 
-        _itemCount.text = _currentCount.ToString();
+        if (needUpdateCountText)
+        {
+            _itemCount.SetTextWithoutNotify(_currentCount.ToString());
+        }
 
-        _actionBtn.interactable = (_totalprice > 0 || _currentCount > 0) && (_totalprice >= _totalBudget || State == ItemDetailsViewState.Sell);
+        _actionBtn.interactable = (_totalprice > 0 || _currentCount > 0) && (_totalprice <= _totalBudget || State == ItemDetailsViewState.Sell);
     }
 
     public class OnSubmitEventArgs

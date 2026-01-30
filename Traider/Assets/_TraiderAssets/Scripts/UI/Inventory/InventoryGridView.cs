@@ -45,7 +45,7 @@ public class InventoryGridView : MonoBehaviour
     public void InitializeItems(List<InventoryItemModel> items)
     {
         DestroyAllItems();
-        if (items != null)
+        if (items != null && items.Count > 0)
         {
             _items = new List<InventoryItemView>(items.Count);
             for (int i = 0; i < items.Count; i++)
