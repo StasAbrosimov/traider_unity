@@ -30,7 +30,13 @@ public class ShopSO : ScriptableObject
         result.LevelsToBy = new List<ShopItemsLevelModel>(ItemsToBy.Length);
 
         result.AllItemsToSell = FillModelItemsList(result.LevelsToSell, ItemsToSell, SellItemModification);
-        result.AllItemsToBy = FillModelItemsList(result.LevelsToBy, ItemsToSell, ByItemModification);
+        result.AllItemsToBy = FillModelItemsList(result.LevelsToBy, ItemsToBy, ByItemModification);
+        result.AllItemsToByDict = new Dictionary<string, InventoryItemModel>();
+
+        foreach (var item in result.AllItemsToBy)
+        {
+            result.AllItemsToByDict.Add(item.ItemId, item);
+        }
 
         return result;
     }

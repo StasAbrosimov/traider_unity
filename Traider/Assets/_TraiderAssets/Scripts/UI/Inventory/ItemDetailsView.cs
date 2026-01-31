@@ -29,6 +29,11 @@ public class ItemDetailsView : MonoBehaviour
     [SerializeField]
     private TMPro.TextMeshProUGUI _itemTotalPrice;
 
+    [SerializeField]
+    private GameObject _itemQuantityPanel;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI _itemQuantityText;
+
     public UnityEvent<OnSubmitEventArgs> OnSubmitEvent = new UnityEvent<OnSubmitEventArgs>();
     public UnityEvent<InventoryItemModel> OnCloseEvent = new UnityEvent<InventoryItemModel>();
 
@@ -57,7 +62,7 @@ public class ItemDetailsView : MonoBehaviour
         _itemCount.onValueChanged.AddListener(OnCountTextChanged);
     }
 
-    public void InitializeView(InventoryItemModel model, ItemDetailsViewState state, int totalBudget)
+    public void InitializeView(InventoryItemModel model, ItemDetailsViewState state = ItemDetailsViewState.View, int totalBudget = 0)
     {
         if(model == null)
         {
@@ -82,6 +87,8 @@ public class ItemDetailsView : MonoBehaviour
         _itemImage.sprite = Model.Image;
         _itemName.text = Model.Name;
         _itemDescription.text = Model.Description;
+        _itemQuantityPanel.SetActive(!Model.InfiniteQuantity);
+        _itemQuantityText.text = Model.Quantity.ToString();
         
         if(State != ItemDetailsViewState.View)
         {
@@ -101,6 +108,57 @@ public class ItemDetailsView : MonoBehaviour
         {
             _itemCount.SetTextWithoutNotify(_currentCount.ToString());
         }
+    }
+
+    [SerializeField]
+    private float _pressedTimer = 0.5f;
+
+    private float _pressedTimerCurrentValue = 0.0f;
+    private bool _isPressed = false;
+    private bool? _isMorePressed = null;
+
+    private void FixedUpdate()
+    {
+        if(_isPressed)
+        {
+            if(_pressedTimerCurrentValue < 0 && _isMorePressed.HasValue)
+            {
+                UpdateTotalPrice(_currentCount + (_isMorePressed.Value ? 1 : -1));
+            }
+
+            _pressedTimerCurrentValue -= Time.deltaTime;
+        }
+    }
+
+
+    public void OnMorePressed()
+    {
+        PressStarted(true);
+    }
+
+    public void OnLessPressed()
+    {
+        PressStarted(false);
+    }
+
+    public void OnReleased()
+    {
+        PressReleased();
+    }
+
+    private void PressStarted(bool isMore)
+    {
+        _isMorePressed = isMore;
+        _isPressed = true;
+        _pressedTimerCurrentValue = _pressedTimer;
+
+    }
+
+    private void PressReleased()
+    {
+        _isMorePressed = null;
+        _isPressed = false;
+        _pressedTimerCurrentValue = 0.0f;
     }
 
     private void DecreaseItemCount()
@@ -138,6 +196,8 @@ public class ItemDetailsView : MonoBehaviour
         {
             _lessBtn.interactable = false;
             newCount = 0;
+
+            if (_isPressed) PressReleased();
         }
         else if(newCount >= Model.Quantity && !Model.InfiniteQuantity)
         {
@@ -148,7 +208,7 @@ public class ItemDetailsView : MonoBehaviour
 
         _currentCount = newCount;
 
-        _totalprice = _currentCount * Model.BasePrice;
+        _totalprice = _currentCount * Model.ShopPrice;
         _itemTotalPrice.text = _totalprice.ToString();
 
         bool needUpdateCountText = true;
@@ -162,7 +222,14 @@ public class ItemDetailsView : MonoBehaviour
             _itemCount.SetTextWithoutNotify(_currentCount.ToString());
         }
 
-        _actionBtn.interactable = (_totalprice > 0 || _currentCount > 0) && (_totalprice <= _totalBudget || State == ItemDetailsViewState.Sell);
+        bool iscanHandlePrice = (_totalprice <= _totalBudget || State == ItemDetailsViewState.Sell);
+
+        _actionBtn.interactable = (_totalprice > 0 || _currentCount > 0) && iscanHandlePrice;
+        _moreBtn.interactable = iscanHandlePrice;
+        if(!iscanHandlePrice && _isPressed)
+        {
+            PressReleased();
+        }
     }
 
     public class OnSubmitEventArgs

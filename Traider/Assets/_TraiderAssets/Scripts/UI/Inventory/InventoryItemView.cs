@@ -30,12 +30,12 @@ public class InventoryItemView : MonoBehaviour
 
     public bool IsDisabled
     {
-        get => (Model?.IsDisabled).GetValueOrDefault(false);
+        get => (Model?.Disabled).GetValueOrDefault(false);
         private set
         {
-            if(Model != null && Model.IsDisabled != value)
+            if(Model != null && Model.Disabled != value)
             {
-                Model.IsDisabled = value;
+                Model.Disabled = value;
                 InitializeView(Model);
             }
         }
@@ -70,8 +70,8 @@ public class InventoryItemView : MonoBehaviour
             _itemQuantity.gameObject.SetActive(!Model.InfiniteQuantity);
             _itemQuantity.text = Model.Quantity.ToString();
             _itemPrice.text = Model.ShopPriceStr;
-            _buttonBGImage.color = model.IsDisabled ? _disabeledButtonBGColor : _normalButtonBGColor;
-            _itemButton.interactable = !model.IsDisabled;
+            _buttonBGImage.color = model.Disabled ? _disabeledButtonBGColor : _normalButtonBGColor;
+            _itemButton.interactable = !model.Disabled;
         }
         else
         {

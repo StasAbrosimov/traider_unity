@@ -108,7 +108,7 @@ MonoBehaviour:
       OverrideModification: 0
       Quantity: 0
       InfiniteQuantity: 1
-    - shopItem: {fileID: 11400000, guid: bfc077f2ca9dd3840b5c2e1e4cb837a7, type: 2}
+    - shopItem: {fileID: 11400000, guid: 986b42361b059f6488a7f11c058cae74, type: 2}
       OverridePrice: 0
       OverrideModification: 0
       Quantity: 0

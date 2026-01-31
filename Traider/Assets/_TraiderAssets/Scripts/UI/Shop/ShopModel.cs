@@ -16,6 +16,7 @@ public class ShopModel
 
     public List<InventoryItemModel> AllItemsToSell { get; set; }
     public List<InventoryItemModel> AllItemsToBy { get; set; }
+    public Dictionary<string, InventoryItemModel> AllItemsToByDict { get; set; }
 }
 
 public class ShopItemsLevelModel

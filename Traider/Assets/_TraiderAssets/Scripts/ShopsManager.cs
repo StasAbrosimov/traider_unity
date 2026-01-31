@@ -12,7 +12,7 @@ public class ShopsManager : MonoBehaviour
 
     [SerializeField]
     private ShopView _shopView;
-    
+
     private List<ShopModel> _ShopsList;
 
     private const string UserInventoryID = "userInventoryID";
@@ -52,11 +52,12 @@ public class ShopsManager : MonoBehaviour
         if(arg0.ShopId != UserInventoryID)
         {
             _shopView.InitializeShop(arg0);
+            UserInventory.Instance.Close();
         }
         else
         {
             _shopView.CloseView();
-            //TODO: initialize user shop inventory
+            UserInventory.Instance.ShowUserInventory();
         }
     }
 }

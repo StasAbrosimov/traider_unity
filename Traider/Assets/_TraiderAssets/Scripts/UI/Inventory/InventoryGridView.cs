@@ -31,12 +31,6 @@ public class InventoryGridView : MonoBehaviour
 
     public void InitializeTitle(string title = null, int? moneyAmount = null)
     {
-        for (int i = _gridRectTransform.childCount - 1; i >= 0; i--)
-        {
-            GameObject child = _gridRectTransform.GetChild(i).gameObject;
-            Destroy(child);
-        }
-
         _moneyAmount = moneyAmount;
         ChangeMoneyAmount(0);
         _header.text = title;
@@ -93,11 +87,13 @@ public class InventoryGridView : MonoBehaviour
 
     private void DestroyAllItems()
     {
-        if (_items == null || _items.Count == 0) return;
-
-        for (int i = 0; i < _items.Count; i++)
+        for (int i = _gridRectTransform.childCount - 1; i >= 0; i--)
         {
-            Destroy(_items[i].gameObject);
+            GameObject child = _gridRectTransform.GetChild(i).gameObject;
+            Destroy(child);
         }
+
+        if (_items == null || _items.Count == 0) return;
+        _items.Clear();
     }
 }
