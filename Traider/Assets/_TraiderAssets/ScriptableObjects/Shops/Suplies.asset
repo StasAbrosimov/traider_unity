@@ -24,33 +24,33 @@ MonoBehaviour:
       OverridePrice: 0
       OverrideModification: 0
       Quantity: 0
-      InfiniteQuantity: 0
+      InfiniteQuantity: 1
     - shopItem: {fileID: 11400000, guid: 06670bd6a62b04748946ab2906edc22e, type: 2}
       OverridePrice: 0
       OverrideModification: 0
       Quantity: 0
-      InfiniteQuantity: 0
+      InfiniteQuantity: 1
     - shopItem: {fileID: 11400000, guid: fa1f794056b11e140bcfd73153b0f98c, type: 2}
       OverridePrice: 0
       OverrideModification: 0
       Quantity: 0
-      InfiniteQuantity: 0
+      InfiniteQuantity: 1
     ShopLevelThreshold: 0
   - shopLevelItems:
     - shopItem: {fileID: 11400000, guid: 2df37b653fb4da04a92ec222a757f159, type: 2}
       OverridePrice: 0
       OverrideModification: 0
       Quantity: 0
-      InfiniteQuantity: 0
+      InfiniteQuantity: 1
     - shopItem: {fileID: 11400000, guid: 1fa74faae99a7114f886d0fa82e8bf24, type: 2}
       OverridePrice: 0
       OverrideModification: 0
       Quantity: 0
-      InfiniteQuantity: 0
+      InfiniteQuantity: 1
     - shopItem: {fileID: 11400000, guid: fa1f794056b11e140bcfd73153b0f98c, type: 2}
       OverridePrice: 0
       OverrideModification: 0
       Quantity: 0
       InfiniteQuantity: 0
-    ShopLevelThreshold: 100000
+    ShopLevelThreshold: 1000000
   ItemsToBy: []

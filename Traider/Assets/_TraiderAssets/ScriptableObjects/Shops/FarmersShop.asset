@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: Farmers
   Description: 
   Image: {fileID: 4518305585588587519, guid: e0211ad4505477847a8f868803e51b1c, type: 3}
-  SellItemModification: 1
+  SellItemModification: 0.9
   ByItemModification: 1.2
   ItemsToSell:
   - shopLevelItems:
@@ -42,7 +42,7 @@ MonoBehaviour:
       OverrideModification: 0
       Quantity: 0
       InfiniteQuantity: 0
-    ShopLevelThreshold: 50000
+    ShopLevelThreshold: 1000000
   ItemsToBy:
   - shopLevelItems:
     - shopItem: {fileID: 11400000, guid: fa1f794056b11e140bcfd73153b0f98c, type: 2}

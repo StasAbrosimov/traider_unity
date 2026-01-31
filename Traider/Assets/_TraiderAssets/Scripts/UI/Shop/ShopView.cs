@@ -41,19 +41,27 @@ public class ShopView : MonoBehaviour
         if (arg0.State != ItemDetailsView.ItemDetailsViewState.View)
         {
             var transactionCashAnout = arg0.Model.ShopPrice * arg0.TotalCount;
-           var result = UserInventory.Instance.CommitTransaction(arg0.Model, arg0.TotalCount, transactionCashAnout, arg0.State == ItemDetailsView.ItemDetailsViewState.Sell);
-            if(result.state == UserInventory.UserTransactionResult.Success)
+           var resultState = UserInventory.Instance.CommitTransaction(arg0.Model, arg0.TotalCount, transactionCashAnout, arg0.State == ItemDetailsView.ItemDetailsViewState.Sell);
+            if(resultState == UserInventory.UserTransactionResult.Success)
             {
                 _currentShop.CashTraded += transactionCashAnout;
-                if (_nextShopLevel != null && _nextShopLevel.LevelThreshold <=_currentShop.CashTraded)
+                if (_nextShopLevel != null)
                 {
-                    _itemDetails.InitializeView(null);
-                    InitializeShop(_currentShop);
+                    _nextLevel.text = string.Format("{0}/{1}", _currentShop.CashTraded, _nextShopLevel.LevelThreshold);
+
+                    if (_nextShopLevel.LevelThreshold <= _currentShop.CashTraded)
+                    {
+                        _itemDetails.InitializeView(null);
+                        InitializeShop(_currentShop);
+                    }
                 }
                 else
                 {
                     InitializeSellItems();
                 }
+
+                _itemDetails.UpdateView(arg0.TotalCount, arg0.State == ItemDetailsView.ItemDetailsViewState.By ? 
+                    UserInventory.Instance.UserMoney : 0);
             }
             else
             {
@@ -78,10 +86,7 @@ public class ShopView : MonoBehaviour
         _itemDetails.InitializeView(null, ItemDetailsView.ItemDetailsViewState.View, 0);
         _currentShop = shopModel;
 
-        _userItems.InitializeItems(new System.Collections.Generic.List<InventoryItemModel>());
-        _userItems.InitializeTitle("Sell", UserInventory.Instance.UserMoney);
-
-        _shopItems.InitializeTitle(_currentShop.Name, 0);
+        _shopItems.InitializeTitle(_currentShop.Name, null);
 
         var currenttLevelIdex = shopModel.LevelsToSell.FindLastIndex(lvl => lvl.LevelThreshold <= shopModel.CashTraded);
         ShopItemsLevelModel currenttItemsLevel = null;
@@ -109,7 +114,7 @@ public class ShopView : MonoBehaviour
             }
         }
 
-        _shopLevel.text = $"{currenttLevelIdex + 1}/{shopModel.LevelsToBy.Count}";
+        _shopLevel.text = $"{currenttLevelIdex + 1}/{shopModel.LevelsToSell.Count}";
 
         _shopItems.InitializeItems(shopModel.AllItemsToSell.Where(sItem => sItem.LevelThreshold <= currenttItemsLevel.LevelThreshold).ToList());
         InitializeSellItems();
@@ -122,7 +127,7 @@ public class ShopView : MonoBehaviour
 
         foreach (var item in UserInventory.Instance.UserItems)
         {
-            var itemToSell = new InventoryItemModel(item, true);
+            var itemToSell =  item.GetCopy(true);
 
             itemToSell.PriceDisabled = true;
             itemToSell.Disabled = true;

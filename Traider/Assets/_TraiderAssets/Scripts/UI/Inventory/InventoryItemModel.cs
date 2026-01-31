@@ -2,29 +2,6 @@ using UnityEngine;
 
 public class InventoryItemModel
 {
-    public InventoryItemModel()
-    {
-
-    }
-
-    public InventoryItemModel(InventoryItemModel item, bool fullCopy = false)
-    {
-        this.ItemId = item.ItemId;
-        this.Image = item.Image;
-        this.Name = item.Name;
-        this.Description = item.Description;
-        this.BasePrice = item.BasePrice;
-        if(fullCopy)
-        {
-            this.ShopPrice = item.ShopPrice;
-            this.PriceDisabled = item.PriceDisabled;
-            this.Quantity = item.Quantity;
-            this.BaseQuantity = item.BaseQuantity;
-            this.InfiniteQuantity = item.InfiniteQuantity;
-            this.Disabled = item.Disabled;
-            this.LevelThreshold = item.LevelThreshold;
-        }
-    }
     public string ItemId;
     public Sprite Image;
     public string Name;
@@ -41,4 +18,30 @@ public class InventoryItemModel
     public int LevelThreshold;
 
     public string ShopPriceStr { get => !PriceDisabled ? ShopPrice.ToString() : string.Empty; }
+
+    public virtual InventoryItemModel GetCopy(bool fullCopy = false)
+    {
+        return this.GetCopy(this, fullCopy);
+    }
+    public virtual InventoryItemModel GetCopy(InventoryItemModel item, bool fullCopy = false)
+    {
+        var copy = new InventoryItemModel();
+        copy.ItemId = item.ItemId;
+        copy.Image = item.Image;
+        copy.Name = item.Name;
+        copy.Description = item.Description;
+        copy.BasePrice = item.BasePrice;
+        if (fullCopy)
+        {
+            copy.ShopPrice = item.ShopPrice;
+            copy.PriceDisabled = item.PriceDisabled;
+            copy.Quantity = item.Quantity;
+            copy.BaseQuantity = item.BaseQuantity;
+            copy.InfiniteQuantity = item.InfiniteQuantity;
+            copy.Disabled = item.Disabled;
+            copy.LevelThreshold = item.LevelThreshold;
+        }
+
+        return copy;
+    }
 }

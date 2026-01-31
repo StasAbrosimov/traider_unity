@@ -74,6 +74,23 @@ public class ItemDetailsView : MonoBehaviour
         Model = model;
         State = state;
         _totalBudget = totalBudget;
+        _currentCount = 0;
+        RefreshView();
+    }
+
+    public void UpdateView(int quantityDelta, int totalBudget = 0)
+    {
+        _totalBudget = totalBudget;
+
+        if (State == ItemDetailsViewState.Sell)
+        {
+            Model.Quantity -= quantityDelta;
+        }
+        else if(!Model.InfiniteQuantity)
+        {
+            Model.Quantity -= quantityDelta;
+        }
+
         RefreshView();
     }
 
@@ -95,7 +112,7 @@ public class ItemDetailsView : MonoBehaviour
             _actionButtonText.text = State == ItemDetailsViewState.Sell ? "Sell" : "By";
         }
 
-        UpdateTotalPrice(0);
+        UpdateTotalPrice(_currentCount);
     }
 
     private void OnCountTextChanged(string arg0)
@@ -222,14 +239,23 @@ public class ItemDetailsView : MonoBehaviour
             _itemCount.SetTextWithoutNotify(_currentCount.ToString());
         }
 
-        bool iscanHandlePrice = (_totalprice <= _totalBudget || State == ItemDetailsViewState.Sell);
+        bool canHandleMore = ((_totalprice + Model.ShopPrice) <= _totalBudget || State == ItemDetailsViewState.Sell);
+        _moreBtn.interactable = canHandleMore;
 
-        _actionBtn.interactable = (_totalprice > 0 || _currentCount > 0) && iscanHandlePrice;
-        _moreBtn.interactable = iscanHandlePrice;
-        if(!iscanHandlePrice && _isPressed)
+        if (!canHandleMore && _isPressed)
         {
             PressReleased();
         }
+
+        bool iscanHandlePrice = (_totalprice <= _totalBudget || State == ItemDetailsViewState.Sell);
+
+        if (!iscanHandlePrice)
+        {
+            var maxHandleCount = _totalBudget / Model.ShopPrice;
+            UpdateTotalPrice(maxHandleCount);
+        }
+
+        _actionBtn.interactable = (_totalprice > 0 || _currentCount > 0);
     }
 
     public class OnSubmitEventArgs
@@ -242,7 +268,7 @@ public class ItemDetailsView : MonoBehaviour
     public enum ItemDetailsViewState
     {
         View,
-        Sell,
-        By,
+        Sell, //Sell to shop
+        By, // from shop
     }
 }

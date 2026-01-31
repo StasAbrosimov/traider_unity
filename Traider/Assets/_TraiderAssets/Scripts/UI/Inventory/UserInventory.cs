@@ -72,7 +72,7 @@ public class UserInventory : MonoBehaviour
     /// <param name="dealPrice">what total price</param>
     /// <param name="userSelling">user sell or by</param>
     /// <returns></returns>
-    public (int userBallance, UserTransactionResult state) CommitTransaction(InventoryItemModel model, int quantity, int dealPrice, bool userSelling)
+    public UserTransactionResult CommitTransaction(InventoryItemModel model, int quantity, int dealPrice, bool userSelling)
     {
         var userBalance = 0;
         UserTransactionResult state = UserTransactionResult.UnnounFail;
@@ -81,16 +81,15 @@ public class UserInventory : MonoBehaviour
 
         if (UserMoney + deltaP < 0)
         {
-            state = UserTransactionResult.NotEnufMoney;
-            return (userBalance, state);
+            return UserTransactionResult.NotEnufMoney;
         }
 
         var targetItem = UserItems.FirstOrDefault(i => i.ItemId == model.ItemId);
 
-        (int userBallance, UserTransactionResult state) __UpdateUserData(InventoryItemModel target_, int deltaP_, int quantity_, bool userSelling_)
+        UserTransactionResult __UpdateUserData(InventoryItemModel target_, int deltaP_, int quantity_, bool userSelling_)
         {
-            var r = 0;
-            var s = UserTransactionResult.NotEnufMoney;
+            
+            var state_ = UserTransactionResult.NotEnufMoney;
 
             var deltaQ = userSelling_ ? -1 * quantity_ : quantity_;
 
@@ -99,7 +98,7 @@ public class UserInventory : MonoBehaviour
                 targetItem.Quantity += deltaQ;
                 UserMoney += deltaP_;
                 userBalance = UserMoney;
-                state = UserTransactionResult.Success;
+                state_ = UserTransactionResult.Success;
             }
 
             if(target_.Quantity == 0)
@@ -107,14 +106,12 @@ public class UserInventory : MonoBehaviour
                 UserItems.Remove(target_);
             }
 
-            return (r, s);
+            return state_;
         }
 
         if (targetItem != null)
         {
-            var fr = __UpdateUserData(targetItem, deltaP, quantity, userSelling);
-            userBalance = fr.userBallance;
-            state = fr.state;
+            state = __UpdateUserData(targetItem, deltaP, quantity, userSelling);
         }
         else if(userSelling)
         {
@@ -122,14 +119,12 @@ public class UserInventory : MonoBehaviour
         }
         else
         {
-            targetItem = new InventoryItemModel(model);
+            targetItem = model.GetCopy();
             UserItems.Add(targetItem);
-            var fr = __UpdateUserData(targetItem, deltaP, quantity, userSelling);
-            userBalance = fr.userBallance;
-            state = fr.state;
+            state = __UpdateUserData(targetItem, deltaP, quantity, userSelling);
         }
 
-        return (userBalance, state);
+        return state;
     }
 
     public enum UserTransactionResult
