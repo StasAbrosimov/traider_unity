@@ -36,12 +36,12 @@ MonoBehaviour:
       OverridePrice: 0
       OverrideModification: 0
       Quantity: 0
-      InfiniteQuantity: 0
+      InfiniteQuantity: 1
     - shopItem: {fileID: 11400000, guid: e67a59b1b0e333f4e8ce6558fc1892b3, type: 2}
       OverridePrice: 0
       OverrideModification: 0
       Quantity: 0
-      InfiniteQuantity: 0
+      InfiniteQuantity: 1
     ShopLevelThreshold: 1000000
   ItemsToBy:
   - shopLevelItems:

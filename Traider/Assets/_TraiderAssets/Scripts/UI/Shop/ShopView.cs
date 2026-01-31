@@ -41,7 +41,7 @@ public class ShopView : MonoBehaviour
         if (arg0.State != ItemDetailsView.ItemDetailsViewState.View)
         {
             var transactionCashAnout = arg0.Model.ShopPrice * arg0.TotalCount;
-           var resultState = UserInventory.Instance.CommitTransaction(arg0.Model, arg0.TotalCount, transactionCashAnout, arg0.State == ItemDetailsView.ItemDetailsViewState.Sell);
+            var resultState = UserInventory.Instance.CommitTransaction(arg0.Model, arg0.TotalCount, transactionCashAnout, arg0.State == ItemDetailsView.ItemDetailsViewState.Sell);
             if(resultState == UserInventory.UserTransactionResult.Success)
             {
                 _currentShop.CashTraded += transactionCashAnout;
@@ -53,6 +53,10 @@ public class ShopView : MonoBehaviour
                     {
                         _itemDetails.InitializeView(null);
                         InitializeShop(_currentShop);
+                    }
+                    else
+                    {
+                        InitializeSellItems();
                     }
                 }
                 else
@@ -85,8 +89,8 @@ public class ShopView : MonoBehaviour
         this.gameObject.SetActive(true);
         _itemDetails.InitializeView(null, ItemDetailsView.ItemDetailsViewState.View, 0);
         _currentShop = shopModel;
-
-        _shopItems.InitializeTitle(_currentShop.Name, null);
+        _title.text = shopModel.Name;
+        _shopItems.InitializeTitle("For sale", null);
 
         var currenttLevelIdex = shopModel.LevelsToSell.FindLastIndex(lvl => lvl.LevelThreshold <= shopModel.CashTraded);
         ShopItemsLevelModel currenttItemsLevel = null;

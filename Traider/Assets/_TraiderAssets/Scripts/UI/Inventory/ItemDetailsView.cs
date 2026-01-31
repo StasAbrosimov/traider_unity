@@ -28,6 +28,8 @@ public class ItemDetailsView : MonoBehaviour
     private Button _lessBtn;
     [SerializeField]
     private TMPro.TextMeshProUGUI _itemTotalPrice;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI _itemPrice;
 
     [SerializeField]
     private GameObject _itemQuantityPanel;
@@ -106,8 +108,9 @@ public class ItemDetailsView : MonoBehaviour
         _itemDescription.text = Model.Description;
         _itemQuantityPanel.SetActive(!Model.InfiniteQuantity);
         _itemQuantityText.text = Model.Quantity.ToString();
-        
-        if(State != ItemDetailsViewState.View)
+        _itemPrice.text = Model.ShopPriceStr;
+
+        if (State != ItemDetailsViewState.View)
         {
             _actionButtonText.text = State == ItemDetailsViewState.Sell ? "Sell" : "By";
         }
