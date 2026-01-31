@@ -90,7 +90,7 @@ public class ShopView : MonoBehaviour
         _itemDetails.InitializeView(null, ItemDetailsView.ItemDetailsViewState.View, 0);
         _currentShop = shopModel;
         _title.text = shopModel.Name;
-        _shopItems.InitializeTitle("For sale", null);
+        _shopItems.InitializeTitle("Buy", null);
 
         var currenttLevelIdex = shopModel.LevelsToSell.FindLastIndex(lvl => lvl.LevelThreshold <= shopModel.CashTraded);
         ShopItemsLevelModel currenttItemsLevel = null;
